@@ -4,7 +4,6 @@ import Link from "next/link"
 import { siteConfig } from "@/config/site"
 import { Layout } from "@/components/layout"
 import { Button } from "@/components/ui/button"
-import { Textarea } from "@/components/ui/textarea"
 import { Input } from "@/components/ui/input"
 import ResultCard from "@/components/result-card"
 import { Separator } from "@/components/ui/separator"
@@ -13,11 +12,7 @@ import { useState } from "react"
 import getConfig from "next/config"
 import next from "next/types"
 
-// import config from next.config.mjs file environment variables
-
-const { publicRuntimeConfig } = getConfig();
-const API_URL = publicRuntimeConfig.API_URL;
-// console.log(API_URL);
+const queryDefinition = "snippet start_time fromSermon { ... on Sermon {title, url, date, summary, image_url } }";
 
 export default function IndexPage() {
   const [searchInput, setSearchInput] = useState('');
@@ -25,16 +20,17 @@ export default function IndexPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const handleSearchClick = async () => {
+    setIsLoading(true);
+  
     try {
-      setIsLoading(true);
-      console.log(searchInput);
-      const response = await fetch(`${API_URL}/sermon/search/?keyword=${searchInput}`);
+      const response = await fetch(`/api/search?searchInput=${searchInput}`);
       const data = await response.json();
+      console.log(data);
       setResult(data);
     } catch (error) {
       console.error(error);
     } finally {
-      setIsLoading(false); // Set loading state back to false
+      setIsLoading(false);
     }
   };
 
@@ -44,7 +40,7 @@ export default function IndexPage() {
         <title>Seeka</title>
         <meta
           name="description"
-          content="Next.js template for building apps with Radix UI and Tailwind CSS"
+          content="Next.js template for buildlsing apps with Radix UI and Tailwind CSS"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
