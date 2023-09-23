@@ -20,7 +20,23 @@ interface Snippets {
   snippets: Snippet[];
 }
 
-const queryDefinition = "snippet start_time fromSermon { ... on Sermon {title, url, date, summary, image_url } }";
+const queryDefinition = 
+`
+  snippet 
+  start_time 
+  fromSermon 
+      { ... 
+        on Sermon 
+          {
+            title, 
+            url, 
+            date, 
+            summary, 
+            image_url 
+          } 
+      } _additional 
+        { distance }
+`;
 
 async function weaviateSearch(searchInput: string): Promise<Snippet[]> {
   const limit = 20;
@@ -38,7 +54,7 @@ async function weaviateSearch(searchInput: string): Promise<Snippet[]> {
     .do();
 
   const results = res.data.Get.SermonSegment;
-
+  console.log(results)
   const snippetsList: Snippets = { snippets: results.map((snippet: any) => ({
     snippet: snippet.snippet,
     start_time: snippet.start_time,
