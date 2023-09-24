@@ -11,12 +11,13 @@ import { Icons } from "@/components/icons"
 import { useState } from "react"
 import getConfig from "next/config"
 import next from "next/types"
+import { SermonListProps } from "@/types/sermon"
 
 const queryDefinition = "snippet start_time fromSermon { ... on Sermon {title, url, date, summary, image_url } }";
 
 export default function IndexPage() {
   const [searchInput, setSearchInput] = useState('');
-  const [result, setResult] = useState([]);
+  const [result, setResult] = useState<SermonListProps>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const handleSearchClick = async () => {
@@ -24,7 +25,7 @@ export default function IndexPage() {
   
     try {
       const response = await fetch(`/api/search?searchInput=${searchInput}`);
-      const data = await response.json();
+      const data : SermonListProps = await response.json();
       console.log(data);
       setResult(data);
     } catch (error) {
@@ -77,11 +78,12 @@ export default function IndexPage() {
             {result.map((item, index) => (
               <ResultCard
                 key={item.url}
-                text={item.snippet}
-                title={item.sermon_title}
+                snippets={item.snippets}
+                title={item.title}
                 url={item.url}
-                image={item.image_url}
-                timestamp={item.start_time}
+                image_url={item.image_url}
+                date={item.date}
+                summary={item.summary}
               />
             ))}
           </div>

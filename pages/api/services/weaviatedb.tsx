@@ -1,5 +1,6 @@
 // services/searchService.ts
 import weaviate, { WeaviateClient } from "weaviate-ts-client";
+import { Accumulator, SermonListProps } from "@/types/sermon"
 
 const client: WeaviateClient = weaviate.client({
 	scheme: "http",
@@ -38,7 +39,7 @@ const queryDefinition =
         { distance }
 `;
 
-async function weaviateSearch(searchInput: string): Promise<Snippet[]> {
+async function weaviateSearch(searchInput: string): Promise<SermonListProps> {
 	const limit = 20;
 	const sermon_class = "SermonSegment"
 	const query_definition = queryDefinition
@@ -60,14 +61,41 @@ async function weaviateSearch(searchInput: string): Promise<Snippet[]> {
 			snippet: snippet.snippet,
 			start_time: snippet.start_time,
 			sermon_title: snippet.fromSermon[0].title,
-			url: `${snippet.fromSermon[0].url}?t=${Math.floor(parseFloat(snippet.start_time))}`,
+			// url: `${snippet.fromSermon[0].url}?t=${Math.floor(parseFloat(snippet.start_time))}`,
+			url: snippet.fromSermon[0].url,
 			image_url: snippet.fromSermon[0].image_url,
 			date: snippet.fromSermon[0].date,
 			summary: snippet.fromSermon[0].summary
 		}))
 	};
 
-	return snippetsList.snippets.filter((snippet) => snippet.snippet.split(' ').length > 10);
+	const relevantSnippets = snippetsList.snippets.filter((snippet) => snippet.snippet.split(' ').length > 10);
+
+	const groupedSnippetsbySermon = relevantSnippets.reduce((acc: Accumulator, snippet: Snippet) => {
+		if (!acc[snippet.sermon_title]) {
+			acc[snippet.sermon_title] = {
+				title: snippet.sermon_title,
+				url: snippet.url,
+				image_url: snippet.image_url,
+				summary: snippet.summary,
+				date: snippet.date,
+				snippets: [],
+			}
+		}
+		
+		acc[snippet.sermon_title].snippets.push({
+			snippet: snippet.snippet,
+			start_time: snippet.start_time,
+		})
+
+		return acc;
+
+	}, {})
+
+	console.log(groupedSnippetsbySermon);
+	const groupedSnippetsbySermonArray = Object.values(groupedSnippetsbySermon);
+	console.log(groupedSnippetsbySermonArray);
+	return groupedSnippetsbySermonArray;
 }
 
 export default weaviateSearch
