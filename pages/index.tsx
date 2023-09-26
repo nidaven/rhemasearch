@@ -72,9 +72,9 @@ export default function IndexPage() {
         </div>
       </section>
       <section className="container grid items-center gap-6 pt-2 pb-2 md:py-10 px-2 sm:py-4 ">
-        <div className="items-start justify-center gap-6 rounded-lg p-4 md:grid lg:grid-cols-2">
+        <div className="items-start justify-center gap-6 rounded-lg p-4 md:grid lg:grid grid-cols-2">
          {result.length > 0 ? (<div className="m-4 text-muted-foreground">{`Found ${result.length} results`}</div>) : null}
-          <div className="col-span-2 grid items-start gap-6">
+          <div className="col-span-2 pb-2 md:grid grid-cols-3 items-start gap-6">
             {result.map((item, index) => (
               <ResultCard
                 key={item.url}
