@@ -47,7 +47,7 @@ export default function IndexPage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <section className="container grid items-center gap-6 pt-6 pb-4 md:pt-10 px-10 ">
-        <div className="flex max-w-[980px] flex-col items-start gap-2">
+        <div className="justify-center max-w-[980px] flex-col items-start gap-2">
           <h1 className="text-3xl font-extrabold leading-tight tracking-tighter sm:text-3xl md:text-5xl lg:text-6xl">
             Seeka <br className="hidden sm:inline" />
           </h1>
@@ -55,10 +55,10 @@ export default function IndexPage() {
             <br className="hidden sm:inline" /> Remember only the word or phrase from a sermon? <br></br>Let&apos;s help you find it.
           </p>
         </div>
-        <div className="flex flex-col items-center gap-4 md:flex-row">
+        <div className="items-center max-w-[800px] justify-center">
           <Input
             id="search-input"
-            className="w-full"
+            className="w-full mb-4"
             placeholder="Search for a sermon"
             value={searchInput}
             onChange={(event) => setSearchInput(event.target.value)}
