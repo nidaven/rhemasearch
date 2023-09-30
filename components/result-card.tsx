@@ -48,7 +48,7 @@ function ResultCard({ title, summary, url, image_url, date, snippets }: SermonPr
             </Collapsible>
             <CardContent className="max-h-[400px] overflow-y-auto mt-4 p-2 lg:m-2 ">
                 {snippets && snippets.map((snippet, index) => (
-                    <SnippetsCard key={index} snippet={snippet.snippet} start_time={snippet.start_time} />
+                    <SnippetsCard key={index} snippet={snippet.snippet} start_time={snippet.start_time} image_url={image_url} audio_url={url} title={title} />
                 ))}
             </CardContent>
         </Card>
