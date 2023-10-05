@@ -1,24 +1,32 @@
 import { Play } from 'lucide-react';
+import { sec_to_time } from '../lib/sec_to_time';
+import usePlayerStore from '@/lib/store';
 
 type SnippetsCardProps = {
     snippet: string;
     start_time: string;
+    audio_url: string;
+    image_url: string;
+    title: string
 };
 
-function divmod(x: number, y: number): [number, number] {
-    const quotient = Math.floor(x / y)
-    const modulus = x % y
-    return [quotient, modulus]
-}
+function SnippetsCard({ snippet, start_time, audio_url, image_url, title }: SnippetsCardProps) {
+    const setUrl = usePlayerStore(state => state.setAudioUrl)
+    const setTimestamp = usePlayerStore(state => state.setTimestamp)
+    const setImage = usePlayerStore(state => state.setImage)
+    const setTitle = usePlayerStore(state => state.setTitle)
+    const setFirstLoad = usePlayerStore(state => state.setLoaded)
 
-function sec_to_time(seconds: number): string {
-    let [minutes, secs] = divmod(seconds, 60);
-    let [hours, remainingMinutes] = divmod(minutes, 60);
-    return `${hours}h:${remainingMinutes.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}m:${secs.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })}s`
-}
+    const handleTimestampClick = () => {
+        setFirstLoad(true);
+        setUrl(audio_url);
+        setTimestamp(parseInt(start_time) - 10); // subtract 15 seconds
+        setImage(image_url);
+        setTitle(title);
+    };
 
+    
 
-function SnippetsCard({ snippet, start_time }: SnippetsCardProps) {
     return (
         <div className='my-2 p-4 light:bg-gray-100/25 rounded-lg relative overflow-clip'>
             <svg
@@ -36,7 +44,12 @@ function SnippetsCard({ snippet, start_time }: SnippetsCardProps) {
                 <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z" />
                 <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z" />
             </svg>
-            <div className='flex flex-row gap-2 justify-end items-center text-gray-400 place-self-end px- '><Play size={16} /> {sec_to_time(parseInt(start_time))}</div>
+            <div 
+                className='flex flex-row gap-2 justify-end items-center text-gray-400 place-self-end' 
+                onClick={handleTimestampClick}
+            >
+                <Play size={16} /> {sec_to_time(parseInt(start_time))}
+            </div>
             <div className='mt-1 light:text-gray-600 tracking-tight text-sm text-justify'>{snippet}</div>
         </div>
     );

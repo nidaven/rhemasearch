@@ -12,6 +12,8 @@ import { useState } from "react"
 import getConfig from "next/config"
 import next from "next/types"
 import { SermonListProps } from "@/types/sermon"
+import PlayerComponent from "@/components/player"
+
 
 const queryDefinition = "snippet start_time fromSermon { ... on Sermon {title, url, date, summary, image_url } }";
 
@@ -22,10 +24,10 @@ export default function IndexPage() {
 
   const handleSearchClick = async () => {
     setIsLoading(true);
-  
+
     try {
       const response = await fetch(`/api/search?searchInput=${searchInput}`);
-      const data : SermonListProps = await response.json();
+      const data: SermonListProps = await response.json();
       console.log(data);
       setResult(data);
     } catch (error) {
@@ -64,7 +66,7 @@ export default function IndexPage() {
             onChange={(event) => setSearchInput(event.target.value)}
           />
           <Button disabled={isLoading} onClick={() => handleSearchClick()} className="w-full max-w-lg">
-          {isLoading && (
+            {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
             Search
@@ -73,8 +75,8 @@ export default function IndexPage() {
       </section>
       <section className="container grid items-center gap-6 pt-2 pb-2 md:py-10 px-2 sm:py-4 ">
         <div className="items-start justify-center gap-6 rounded-lg p-4 md:grid lg:grid grid-cols-2">
-         {result.length > 0 ? (<div className="m-4 text-muted-foreground">{`Found ${result.length} results`}</div>) : null}
-          <div className="col-span-2 pb-2 md:grid grid-cols-3 items-start gap-6">
+          {result.length > 0 ? (<div className="m-4 text-muted-foreground">{`Found ${result.length} results`}</div>) : null}
+          <div className="col-span-2 pb-2 md:grid md:grid-cols-2 lg:grid-cols-3 items-start gap-6">
             {result.map((item, index) => (
               <ResultCard
                 key={item.url}
@@ -87,6 +89,7 @@ export default function IndexPage() {
               />
             ))}
           </div>
+            <PlayerComponent />
         </div>
       </section>
     </Layout>

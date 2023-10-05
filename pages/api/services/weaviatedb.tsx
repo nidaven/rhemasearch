@@ -3,9 +3,11 @@ import weaviate, { WeaviateClient } from "weaviate-ts-client";
 import { Accumulator, SermonListProps } from "@/types/sermon"
 
 const client: WeaviateClient = weaviate.client({
-	scheme: "http",
-	host: "192.168.1.115:8891",
+	scheme: "https",
+	host: process.env.WEAVIATE_URL,
 });
+
+// const openaiApiKey = "YOUR_API_KEY_HERE";
 
 interface Snippet {
 	snippet: string;
@@ -54,6 +56,7 @@ async function weaviateSearch(searchInput: string): Promise<SermonListProps> {
 		.withLimit(limit)
 		.do();
 
+	console.log(res)
 	const results = res.data.Get.SermonSegment;
 
 	const snippetsList: Snippets = {
