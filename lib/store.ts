@@ -5,6 +5,7 @@ interface PlayerStoreState {
     timestamp: number;
     image: string;
     title: string;
+    loaded: boolean;
 }
 
 interface PlayerStoreActions {
@@ -12,6 +13,7 @@ interface PlayerStoreActions {
     setTimestamp: (timestamp: number) => void;
     setImage: (image: string) => void;
     setTitle: (title: string) => void;
+    setLoaded: (loaded: boolean) => void;
 }
 
 const usePlayerStore = create<PlayerStoreState & PlayerStoreActions >(set => ({
@@ -19,10 +21,12 @@ const usePlayerStore = create<PlayerStoreState & PlayerStoreActions >(set => ({
     timestamp: 0,
     image: '',
     title: '',
+    loaded: false,
     setAudioUrl: (url) => set({ url }),
     setTimestamp: (timestamp) => set({ timestamp }),
     setImage: (image) => set({ image }),
     setTitle: (title) => set({ title }),
+    setLoaded: (loaded) => set({ loaded }),
 }));
 
 export default usePlayerStore;

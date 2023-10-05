@@ -15,12 +15,17 @@ function SnippetsCard({ snippet, start_time, audio_url, image_url, title }: Snip
     const setTimestamp = usePlayerStore(state => state.setTimestamp)
     const setImage = usePlayerStore(state => state.setImage)
     const setTitle = usePlayerStore(state => state.setTitle)
+    const setFirstLoad = usePlayerStore(state => state.setLoaded)
 
     const handleTimestampClick = () => {
-        setTimestamp(parseInt(start_time));
+        setFirstLoad(true);
+        setUrl(audio_url);
+        setTimestamp(parseInt(start_time) - 10); // subtract 15 seconds
         setImage(image_url);
         setTitle(title);
     };
+
+    
 
     return (
         <div className='my-2 p-4 light:bg-gray-100/25 rounded-lg relative overflow-clip'>

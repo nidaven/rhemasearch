@@ -38,11 +38,11 @@ function ResultCard({ title, summary, url, image_url, date, snippets }: SermonPr
                 </div>
             </div>
             <Collapsible className="grid grid-cols-auto w-full" open={open} onOpenChange={setOpen}>
-                <CollapsibleTrigger className="grow shrink-0 p-1 mx-2 text-center text-sm justify-center flex flex-row items-center bg-cyan-200/25 text-cyan-800/100">
+                <CollapsibleTrigger className="grow shrink-0 p-1 mx-2 text-center text-sm justify-center flex flex-row items-center bg-cyan-200/25 text-cyan-800/100 dark:bg-cyan-300">
                     {open ? 'Hide Summary' : 'Show Summary'}
                     {open ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                 </CollapsibleTrigger>                
-                <CollapsibleContent className="max-h-28 pt-4 overflow-y-auto text-sm text-cyan-600/80 p-4 mx-2 bg-cyan-300/10">
+                <CollapsibleContent className="max-h-28 pt-4 overflow-y-auto text-sm text-cyan-600/80 p-4 mx-2 bg-cyan-300/10 dark:bg-cyan-300/90">
                     {summary}
                 </CollapsibleContent>
             </Collapsible>
