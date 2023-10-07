@@ -1,4 +1,4 @@
-import { Play } from 'lucide-react';
+import { Play, PlayCircleIcon } from 'lucide-react';
 import { sec_to_time } from '../lib/sec_to_time';
 import usePlayerStore from '@/lib/store';
 
@@ -45,10 +45,10 @@ function SnippetsCard({ snippet, start_time, audio_url, image_url, title }: Snip
                 <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z" />
             </svg>
             <div 
-                className='flex flex-row gap-2 justify-end items-center text-gray-400 place-self-end' 
+                className='flex flex-row gap-1 justify-end items-center text-red-500 place-self-end text-sm' 
                 onClick={handleTimestampClick}
             >
-                <Play size={16} /> {sec_to_time(parseInt(start_time))}
+                <div className='text-sm tracking-tighter font-bold text-red-400'>listen from</div> <Play size={11} />{sec_to_time(parseInt(start_time))}
             </div>
             <div className='mt-1 light:text-gray-600 tracking-tight text-sm text-justify'>{snippet}</div>
         </div>

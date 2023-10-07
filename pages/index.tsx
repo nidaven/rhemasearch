@@ -48,29 +48,34 @@ export default function IndexPage() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <section className="container grid items-center gap-6 pt-6 pb-4 md:pt-10 px-10 ">
-        <div className="justify-center max-w-[980px] flex-col items-start gap-2">
-          <h1 className="text-3xl font-extrabold leading-tight tracking-tighter sm:text-3xl md:text-5xl lg:text-6xl">
+      <section className="items-center gap-6 pb-4 pt-10 px-10 ">
+        <div className="justify-center flex-col items-start gap-2">
+          <h1 className="text-6xl font-extrabold leading-tight tracking-tighter text-center">
             Seeka <br className="hidden sm:inline" />
           </h1>
-          <p className="max-w-[700px] text-lg text-slate-700 dark:text-slate-400 sm:text-xl items-center justify-center">
-            <br className="hidden sm:inline" /> Remember only the word or phrase from a sermon? <br></br>Let&apos;s help you find it.
+          <h2 className="text-xl text-yellow-500 dark:text-yellow-400/80 md:text-2xl lg:text-3xl pt-1 text-center">Search the <b>transcripts</b> of your favourite sermons.</h2>
+          <p className="text-sm text-gray-500/60 dark:text-slate-400 items-center justify-center pt-4 text-center">
+            <br className="hidden" /> Find the sermons you've been looking for with ease using our powerful search tool, allowing you to find and play from the exact context you remember.
           </p>
         </div>
-        <div className="items-center max-w-[800px] justify-center">
-          <Input
-            id="search-input"
-            className="w-full mb-4"
-            placeholder="Search for a sermon"
-            value={searchInput}
-            onChange={(event) => setSearchInput(event.target.value)}
-          />
-          <Button disabled={isLoading} onClick={() => handleSearchClick()} className="w-full max-w-lg">
-            {isLoading && (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-            )}
-            Search
-          </Button>
+        <div className="items-center mt-4 justify-center">
+          <div className="flex justify-center">
+            <Input
+              id="search-input"
+              className="w-full max-w-[800px] mb-4"
+              placeholder="Search for a sermon"
+              value={searchInput}
+              onChange={(event) => setSearchInput(event.target.value)}
+            />
+          </div>
+          <div className="flex justify-center">
+            <Button disabled={isLoading} onClick={() => handleSearchClick()} className="w-full max-w-[800px] items-center text-center">
+              {isLoading && (
+                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              Search
+            </Button>
+          </div>
         </div>
       </section>
       <section className="container grid items-center gap-6 pt-2 pb-2 md:py-10 px-2 sm:py-4 ">
@@ -89,7 +94,7 @@ export default function IndexPage() {
               />
             ))}
           </div>
-            <PlayerComponent />
+          <PlayerComponent />
         </div>
       </section>
     </Layout>
