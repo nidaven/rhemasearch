@@ -1,4 +1,5 @@
-import type { AppProps } from "next/app"
+// import type AppProps  from 'next/app';
+
 import { Inter as FontSans } from "@next/font/google"
 import { ThemeProvider } from "next-themes"
 
@@ -9,6 +10,9 @@ const fontSans = FontSans({
   variable: "--font-sans",
   display: "swap",
 })
+
+import type { AppProps } from 'next/app';
+
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

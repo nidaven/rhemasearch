@@ -55,7 +55,7 @@ export default function IndexPage() {
           </h1>
           <h2 className="text-xl text-yellow-500 dark:text-yellow-400/80 md:text-2xl lg:text-3xl pt-1 text-center">Search the <b>transcripts</b> of your favourite sermons.</h2>
           <p className="text-sm text-gray-500/60 dark:text-slate-400 items-center justify-center pt-4 text-center">
-            <br className="hidden" /> Find the sermons you've been looking for with ease using our powerful search tool, allowing you to find and play from the exact context you remember.
+            <br className="hidden" /> Find the sermons you&rsquo;ve been looking for with ease using our powerful search tool, allowing you to find and play from the exact context you remember.
           </p>
         </div>
         <div className="items-center mt-4 justify-center">
