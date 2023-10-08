@@ -2,7 +2,7 @@ lockfileVersion: '6.0'
 
 dependencies:
   '@next/font':
-    specifier: ^13.1.6
+    specifier: 13.1.6
     version: 13.1.6
   '@radix-ui/react-accessible-icon':
     specifier: ^1.0.1
@@ -101,7 +101,7 @@ dependencies:
     specifier: ^0.105.0-alpha.4
     version: 0.105.0-alpha.4(react@18.2.0)
   next:
-    specifier: ^13.1.6
+    specifier: 13.1.6
     version: 13.1.6(@babel/core@7.20.12)(react-dom@18.2.0)(react@18.2.0)
   next-themes:
     specifier: ^0.2.1
