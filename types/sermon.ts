@@ -10,6 +10,7 @@ export interface SermonProps {
     url: string;
     image_url?: string;
     snippets: Snippet[];
+    searchInput?: string;
 }
 
 export type SermonListProps = SermonProps[];
