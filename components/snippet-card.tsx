@@ -31,8 +31,13 @@ function SnippetsCard({ snippet, start_time, audio_url, image_url, title, search
     const snippetWords = snippet.split(/[ ,]+/);
 
     const highlightWord = (word) => {
-        return searchWords.some(searchWord => word.toLowerCase().includes(searchWord.toLowerCase()));
-      };
+        return searchWords.some(searchWord => {
+            if (word && searchWord) {
+                return word.toLowerCase().includes(searchWord.toLowerCase());
+            }
+            return false;
+        });
+    };
 
     return (
         <div className='my-2 p-4 light:bg-gray-100/25 rounded-lg relative overflow-clip'>
@@ -60,9 +65,20 @@ function SnippetsCard({ snippet, start_time, audio_url, image_url, title, search
             <div className='mt-1 light:text-gray-600 tracking-tight text-sm text-justify'>
                 {snippetWords.map((word, index) => {
                     const isLastWord = index === snippetWords.length - 1;
+
+                    if (/\s/.test(word)) {
+                        return <span key={`${index}-whitespace`}>{word}</span>; // Return the whitespace wrapped in a span with a unique key
+                    }
+
+                    const highlight = highlightWord(word);
+                    const nextWordIsHighlighted = snippetWords[index + 1] && highlightWord(snippetWords[index + 1]);
+                    const highlightEnd = highlight && !nextWordIsHighlighted ? 'rounded-r' : '';
+                    const highlightStart = highlight && !highlightWord(snippetWords[index - 1]) ? 'rounded-l' : '';
+
+
                     return [
-                        highlightWord(word) ? (
-                            <span key={`${index}-highlight`} className='bg-yellow-500/30 text-yellow-300 px-1 rounded'>
+                        highlight ? (
+                            <span key={`${index}-highlight`} className={`bg-yellow-500/30 text-yellow-300 pr-1 mx-0 ${highlightStart} ${highlightEnd}`}>
                                 {word}
                             </span>
                         ) : (
