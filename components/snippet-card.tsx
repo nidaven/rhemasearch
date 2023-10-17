@@ -39,6 +39,42 @@ function SnippetsCard({ snippet, start_time, audio_url, image_url, title, search
         });
     };
 
+    function highlightWords(snippetWords, highlightWord) {
+        const highlightedElements = [];
+      
+        let subarray = [];
+        for (let index = 0; index < snippetWords.length; index++) {
+          const word = snippetWords[index];
+          const highlight = highlightWord(word);
+      
+          if (highlight) {
+            subarray.push(word);
+          } else {
+            if (subarray.length > 0) {
+              highlightedElements.push(
+                <span key={`${index}-highlight`} className={`bg-yellow-500/30 text-yellow-300 px-1 mx-0 rounded`}>
+                  {subarray.join(' ')}
+                </span>,
+                " "
+              );
+              subarray = [];
+            }
+            highlightedElements.push(<span key={`${index}-normal`}>{word}</span>, " ");
+          }
+        }
+      
+        if (subarray.length > 0) {
+          highlightedElements.push(
+            <span key={`${snippetWords.length}-highlight`} className={`bg-yellow-500/30 text-yellow-300 px-2 mx-0 rounded`}>
+              {subarray.join(' ')}
+            </span>
+          );
+        }
+      
+        return highlightedElements;
+      }
+      
+
     return (
         <div className='my-2 p-4 light:bg-gray-100/25 rounded-lg relative overflow-clip'>
             <svg
@@ -63,30 +99,7 @@ function SnippetsCard({ snippet, start_time, audio_url, image_url, title, search
                 <div className='text-sm tracking-tighter font-bold text-red-400'>listen from</div> <Play size={11} />{sec_to_time(parseInt(start_time))}
             </div>
             <div className='mt-1 light:text-gray-600 tracking-tight text-sm text-justify'>
-                {snippetWords.map((word, index) => {
-                    const isLastWord = index === snippetWords.length - 1;
-
-                    if (/\s/.test(word)) {
-                        return <span key={`${index}-whitespace`}>{word}</span>; // Return the whitespace wrapped in a span with a unique key
-                    }
-
-                    const highlight = highlightWord(word);
-                    const nextWordIsHighlighted = snippetWords[index + 1] && highlightWord(snippetWords[index + 1]);
-                    const highlightEnd = highlight && !nextWordIsHighlighted ? 'rounded-r' : '';
-                    const highlightStart = highlight && !highlightWord(snippetWords[index - 1]) ? 'rounded-l' : '';
-
-
-                    return [
-                        highlight ? (
-                            <span key={`${index}-highlight`} className={`bg-yellow-500/30 text-yellow-300 pr-1 mx-0 ${highlightStart} ${highlightEnd}`}>
-                                {word}
-                            </span>
-                        ) : (
-                            <span key={`${index}-normal`} className=''>{word}</span>
-                        ),
-                        !isLastWord && ' ',
-                    ];
-                })}
+                {highlightWords(snippetWords, highlightWord)}
             </div>
         </div>
     );

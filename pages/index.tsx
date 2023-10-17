@@ -28,7 +28,7 @@ export default function IndexPage() {
     try {
       const response = await fetch(`/api/search?searchInput=${searchInput}`);
       const data: SermonListProps = await response.json();
-      console.log(data);
+      // console.log(data);
       setResult(data);
     } catch (error) {
       console.error(error);
