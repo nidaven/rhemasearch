@@ -28,7 +28,7 @@ export default function IndexPage() {
     try {
       const response = await fetch(`/api/search?searchInput=${searchInput}`);
       const data: SermonListProps = await response.json();
-      console.log(data);
+      // console.log(data);
       setResult(data);
     } catch (error) {
       console.error(error);
@@ -91,6 +91,7 @@ export default function IndexPage() {
                 image_url={item.image_url}
                 date={item.date}
                 summary={item.summary}
+                searchInput={searchInput}
               />
             ))}
           </div>

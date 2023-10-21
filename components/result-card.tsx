@@ -11,22 +11,11 @@ import { useState } from "react"
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '../components/ui/collapsible'
 
 
-type Props = {
-    title: string
-    text: string
-    url: string
-    //   category: string
-    //   author: string
-    image: string
-    timestamp: string
-}
-
-
-function ResultCard({ title, summary, url, image_url, date, snippets }: SermonProps) {
+function ResultCard({ title, summary, url, image_url, date, snippets, searchInput }: SermonProps) {
     const numResults = snippets.length
     const [open, setOpen] = useState(false)
     // const formatted_time = sec_to_time(parseInt(timestamp))
-    console.log(snippets)
+    // console.log(snippets)
     return (
         <Card className="grid justify-items-stretch bg-transparent mb-8">
             <div className="grid grid-cols-3 gap-3 max-h-36 pt-4 px-6 mb-4">
@@ -48,7 +37,7 @@ function ResultCard({ title, summary, url, image_url, date, snippets }: SermonPr
             </Collapsible>
             <CardContent className="max-h-[400px] overflow-y-auto mt-4 p-2 lg:m-2 ">
                 {snippets && snippets.map((snippet, index) => (
-                    <SnippetsCard key={index} snippet={snippet.snippet} start_time={snippet.start_time} image_url={image_url} audio_url={url} title={title} />
+                    <SnippetsCard key={index} snippet={snippet.snippet} start_time={snippet.start_time} image_url={image_url} audio_url={url} title={title} searchInput={searchInput} />
                 ))}
             </CardContent>
         </Card>
