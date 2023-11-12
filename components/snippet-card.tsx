@@ -1,6 +1,7 @@
 import { Play, PlayCircleIcon } from 'lucide-react';
 import { sec_to_time } from '../lib/sec_to_time';
 import usePlayerStore from '@/lib/store';
+import { urlState, timestampState, imageUrlState, titleState, loadedState } from '../lib/signals'
 
 type SnippetsCardProps = {
     snippet: string;
@@ -18,6 +19,10 @@ function SnippetsCard({ snippet, start_time, audio_url, image_url, title }: Snip
     const setFirstLoad = usePlayerStore(state => state.setLoaded)
 
     const handleTimestampClick = () => {
+        // urlState.value = audio_url;
+        // timestampState.value = parseInt(start_time) - 10; // subtract 15 seconds
+        // imageUrlState.value = image_url;
+        // titleState.value = title;
         setFirstLoad(true);
         setUrl(audio_url);
         setTimestamp(parseInt(start_time) - 10); // subtract 15 seconds

@@ -12,7 +12,7 @@ import { useState } from "react"
 import getConfig from "next/config"
 import next from "next/types"
 import { SermonListProps } from "@/types/sermon"
-import PlayerComponent from "@/components/player"
+import PlayerComponent from "@/components/player_depr"
 
 
 const queryDefinition = "snippet start_time fromSermon { ... on Sermon {title, url, date, summary, image_url } }";
@@ -28,7 +28,7 @@ export default function IndexPage() {
     try {
       const response = await fetch(`/api/search?searchInput=${searchInput}`);
       const data: SermonListProps = await response.json();
-      console.log(data);
+      // console.log(data);
       setResult(data);
     } catch (error) {
       console.error(error);
