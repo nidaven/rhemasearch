@@ -1,6 +1,6 @@
 'use client'
 
-import { useTranslations } from 'next-intl'
+// import { useTranslations } from 'next-intl'
 
 import { useAudioPlayer } from './AudioProvider'
 
@@ -34,13 +34,13 @@ type ForwardButtonProps = {
   amount?: number
 }
 export function ForwardButton({ player, amount = 10 }: ForwardButtonProps) {
-  const t = useTranslations('AudioPlayer')
+  // const t = useTranslations('AudioPlayer')
   return (
     <button
       type="button"
       className="group relative rounded-full focus:outline-none"
       onClick={() => player.seekBy?.(amount)}
-      aria-label={t('fast_forward', { s: amount })}
+      // aria-label={t('fast_forward', { s: amount })}
     >
       <div className="absolute -inset-4 -left-2 md:hidden" />
       <ForwardIcon className="h-6 w-6 stroke-neutral-500 group-hover:stroke-neutral-700 dark:stroke-neutral-400 dark:group-hover:stroke-neutral-200" />

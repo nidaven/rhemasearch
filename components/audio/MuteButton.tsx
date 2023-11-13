@@ -1,6 +1,6 @@
 'use client'
 
-import { useTranslations } from 'next-intl'
+// import { useTranslations } from 'next-intl'
 
 import { useAudioPlayer } from './AudioProvider'
 
@@ -42,13 +42,13 @@ export function MuteButton({
 }: {
   player: ReturnType<typeof useAudioPlayer>
 }) {
-  const t = useTranslations('AudioPlayer')
+  // const t = useTranslations('AudioPlayer')
   return (
     <button
       type="button"
       className="group relative rounded-md hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:ring-offset-2 dark:hover:bg-neutral-800 dark:focus:ring-neutral-600 md:order-none"
       onClick={() => player.toggleMute?.()}
-      aria-label={player.muted ? t('unmute') : t('mute')}
+      aria-label={player.muted ? 'unmute' : 'mute'}
     >
       <div className="absolute -inset-4 md:hidden" />
       <MuteIcon

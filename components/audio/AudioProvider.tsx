@@ -18,6 +18,7 @@ interface AudioData {
   audio: Audio
   title: string
   link: string
+  startTime?: number;
 }
 
 type Player = {
@@ -94,7 +95,7 @@ export function AudioProvider({ children }: AudioProviderProps) {
             playerRef.current.load()
             playerRef.current.pause()
             playerRef.current.playbackRate = playbackRate
-            playerRef.current.currentTime = 0
+            playerRef.current.currentTime = data.startTime ? data.startTime - 10 : 0
           }
         }
 

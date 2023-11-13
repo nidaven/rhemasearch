@@ -1,6 +1,6 @@
 'use client'
 
-import { useTranslations } from 'next-intl'
+// import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 
 import { useAudioPlayer } from './AudioProvider'
@@ -97,7 +97,7 @@ export function PlaybackRateButton({
 }: {
   player: ReturnType<typeof useAudioPlayer>
 }) {
-  const t = useTranslations('AudioPlayer')
+  // const t = useTranslations('AudioPlayer')
   const [playbackRate, setPlaybackRate] = useState(playbackRates[0])
 
   return (
@@ -115,7 +115,7 @@ export function PlaybackRateButton({
           return next
         })
       }}
-      aria-label={t('playback_rate')}
+      aria-label={'playback_rate'}
     >
       <div className="absolute -inset-4 md:hidden" />
       <playbackRate.icon className="h-4 w-4" />

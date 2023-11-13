@@ -2,7 +2,7 @@
 
 import type { ComponentProps } from '@zolplay/react'
 import { clsxm } from '@zolplay/utils'
-import { useTranslations } from 'next-intl'
+// import { useTranslations } from 'next-intl'
 
 import { useAudioPlayer } from './AudioProvider'
 
@@ -35,7 +35,7 @@ export function PlayButton({
   size?: 'large' | 'medium' | 'small'
   className?: string
 }) {
-  const t = useTranslations('AudioPlayer')
+  // const t = useTranslations('AudioPlayer')
 
   return (
     <button
@@ -50,7 +50,7 @@ export function PlayButton({
         className
       )}
       onClick={() => player.toggle?.()}
-      aria-label={player.playing ? t('pause') : t('play')}
+      aria-label={player.playing ? 'pause' : 'play'}
     >
       <div className="absolute -inset-3 md:hidden" />
       {player.playing ? (
