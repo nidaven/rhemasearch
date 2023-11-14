@@ -4,9 +4,11 @@ import {
   createContext,
   ReactNode,
   useContext,
+  useEffect,
   useMemo,
   useReducer,
   useRef,
+  useState,
 } from 'react'
 
 interface Audio {
@@ -161,6 +163,11 @@ export function AudioProvider({ children }: AudioProviderProps) {
 
 export function useAudioPlayer(data: AudioData | undefined) {
   const player = useContext(AudioPlayerContext)
+  const [playing, setPlaying] = useState(false)
+
+  useEffect(() => {
+    setPlaying(player?.isPlaying?.(data) ?? false)
+  }, [player, data])
 
   return useMemo(
     () => ({
@@ -171,10 +178,8 @@ export function useAudioPlayer(data: AudioData | undefined) {
       toggle() {
         player?.toggle?.(data)
       },
-      get playing() {
-        return player?.isPlaying?.(data) ?? false
-      },
+      playing,
     }),
-    [player, data]
+    [player, data, playing]
   )
 }

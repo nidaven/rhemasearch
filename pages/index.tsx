@@ -6,13 +6,11 @@ import { Layout } from "@/components/layout"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import ResultCard from "@/components/result-card"
-import { PauseIcon, PlayIcon } from 'lucide-react'
 import { Icons } from "@/components/icons"
 import { useState } from "react"
 import getConfig from "next/config"
 import next from "next/types"
 import { SermonListProps } from "@/types/sermon"
-import PlayerComponent from "@/components/player_depr"
 import { AudioProvider, useAudioPlayer } from "@/components/audio/AudioProvider"
 import { AudioPlayer } from "@/components/audio/AudioPlayer"
 

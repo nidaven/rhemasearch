@@ -33,17 +33,17 @@ function SnippetsCard({ snippet, start_time, audio_url, image_url, title }: Snip
   const setTitle = usePlayerStore(state => state.setTitle)
   const setFirstLoad = usePlayerStore(state => state.setLoaded)
 
-  const handleTimestampClick = () => {
-    // urlState.value = audio_url;
-    // timestampState.value = parseInt(start_time) - 10; // subtract 15 seconds
-    // imageUrlState.value = image_url;
-    // titleState.value = title;
-    setFirstLoad(true);
-    setUrl(audio_url);
-    setTimestamp(parseInt(start_time) - 10); // subtract 15 seconds
-    setImage(image_url);
-    setTitle(title);
-  };
+  // const handleTimestampClick = () => {
+  //   // urlState.value = audio_url;
+  //   // timestampState.value = parseInt(start_time) - 10; // subtract 15 seconds
+  //   // imageUrlState.value = image_url;
+  //   // titleState.value = title;
+  //   setFirstLoad(true);
+  //   setUrl(audio_url);
+  //   setTimestamp(parseInt(start_time) - 10); // subtract 15 seconds
+  //   setImage(image_url);
+  //   setTitle(title);
+  // };
 
   const audioPlayerData = useMemo(
     () => ({
@@ -55,10 +55,9 @@ function SnippetsCard({ snippet, start_time, audio_url, image_url, title }: Snip
       link: '',
       startTime: parseInt(start_time)
     }),
-    [audio_url]
+    [audio_url, start_time]
   )
   const player = useAudioPlayer(audioPlayerData)
-
 
   return (
     <div className='my-2 p-4 light:bg-gray-100/25 rounded-lg relative overflow-clip'>
@@ -77,33 +76,20 @@ function SnippetsCard({ snippet, start_time, audio_url, image_url, title }: Snip
         <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z" />
         <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z" />
       </svg>
-      {/* <div
-        className='flex flex-row gap-1 justify-end items-center text-red-500 place-self-end text-sm'
-        onClick={handleTimestampClick}
-      >
-        <div className='text-sm tracking-tighter font-bold text-red-400'>listen from</div> <Play size={11} />{sec_to_time(parseInt(start_time))}
-      </div> */}
+  
       <div
         // type="button"
         onClick={() => {
           player.play()
           player.seek(parseInt(start_time)-10)
         }}
-        // className='flex flex-row gap-1 justify-end items-center text-red-500 place-self-end text-sm'
         className="flex flex-row items-center gap-1 justify-end text-sm font-bold leading-6 place-self-end text-blue-500 hover:text-blue-700 active:text-blue-900 dark:text-blue-400 dark:hover:text-blue-200 dark:active:text-blue-100"
-      // aria-label={t(
-      //   player.playing ? 'pause_episode' : 'play_episode',
-      //   { episode: episode.title }
-      // )}
       >
         <PlayPauseIcon
           playing={player.playing ?? false}
           className="h-4 w-4 stroke-current"
         />
         <div className='text-sm tracking-tighter font-bold text-red-400'>listen from</div>{sec_to_time(parseInt(start_time))}
-        {/* <span className="ml-2" aria-hidden="true">
-                  {t('listen')}
-                </span> */}
       </div>
       <div className='mt-1 light:text-gray-600 tracking-tight text-sm text-justify'>{snippet}</div>
     </div>
