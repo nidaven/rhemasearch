@@ -8,12 +8,13 @@ import { ComponentProps } from '@zolplay/react'
 import { useAudioPlayer } from './audio/AudioProvider';
 
 type SnippetsCardProps = {
-  snippet: string;
-  start_time: string;
-  audio_url: string;
-  image_url: string;
-  title: string
-  searchInput?: string
+    snippet: string;
+    start_time: string;
+    audio_url: string;
+    image_url: string;
+    title: string
+    searchInput?: string
+
 };
 
 function PlayPauseIcon({
