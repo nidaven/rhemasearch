@@ -6,13 +6,13 @@ import { Layout } from "@/components/layout"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import ResultCard from "@/components/result-card"
-import { Separator } from "@/components/ui/separator"
 import { Icons } from "@/components/icons"
 import { useState } from "react"
 import getConfig from "next/config"
 import next from "next/types"
 import { SermonListProps } from "@/types/sermon"
-import PlayerComponent from "@/components/player"
+import { AudioProvider, useAudioPlayer } from "@/components/audio/AudioProvider"
+import { AudioPlayer } from "@/components/audio/AudioPlayer"
 
 
 const queryDefinition = "snippet start_time fromSermon { ... on Sermon {title, url, date, summary, image_url } }";
@@ -78,6 +78,7 @@ export default function IndexPage() {
           </div>
         </div>
       </section>
+      <AudioProvider>
       <section className="container grid items-center gap-6 pt-2 pb-2 md:py-10 px-2 sm:py-4 ">
         <div className="items-start justify-center gap-6 rounded-lg p-4 md:grid lg:grid grid-cols-2">
           {result.length > 0 ? (<div className="m-4 text-muted-foreground">{`Found ${result.length} results`}</div>) : null}
@@ -95,9 +96,12 @@ export default function IndexPage() {
               />
             ))}
           </div>
-          <PlayerComponent />
         </div>
       </section>
+      <div className="fixed inset-x-0 bottom-0 z-10 lg:left-112 xl:left-120">
+        <AudioPlayer />
+      </div>
+      </AudioProvider>
     </Layout>
   )
 }

@@ -95,9 +95,9 @@ async function weaviateSearch(searchInput: string): Promise<SermonListProps> {
 
 	}, {})
 
-	console.log(groupedSnippetsbySermon);
+	// console.log(groupedSnippetsbySermon);
 	const groupedSnippetsbySermonArray = Object.values(groupedSnippetsbySermon);
-	console.log(groupedSnippetsbySermonArray);
+	// console.log(groupedSnippetsbySermonArray);
 	return groupedSnippetsbySermonArray;
 }
 
