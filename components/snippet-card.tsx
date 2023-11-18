@@ -13,6 +13,7 @@ type SnippetsCardProps = {
   audio_url: string;
   image_url: string;
   title: string
+  searchInput?: string
 };
 
 function PlayPauseIcon({
@@ -26,24 +27,12 @@ function PlayPauseIcon({
   )
 }
 
-function SnippetsCard({ snippet, start_time, audio_url, image_url, title }: SnippetsCardProps) {
+function SnippetsCard({ snippet, start_time, audio_url, image_url, title, searchInput }: SnippetsCardProps) {
   const setUrl = usePlayerStore(state => state.setAudioUrl)
   const setTimestamp = usePlayerStore(state => state.setTimestamp)
   const setImage = usePlayerStore(state => state.setImage)
   const setTitle = usePlayerStore(state => state.setTitle)
   const setFirstLoad = usePlayerStore(state => state.setLoaded)
-
-  // const handleTimestampClick = () => {
-  //   // urlState.value = audio_url;
-  //   // timestampState.value = parseInt(start_time) - 10; // subtract 15 seconds
-  //   // imageUrlState.value = image_url;
-  //   // titleState.value = title;
-  //   setFirstLoad(true);
-  //   setUrl(audio_url);
-  //   setTimestamp(parseInt(start_time) - 10); // subtract 15 seconds
-  //   setImage(image_url);
-  //   setTitle(title);
-  // };
 
   const audioPlayerData = useMemo(
     () => ({
@@ -57,7 +46,55 @@ function SnippetsCard({ snippet, start_time, audio_url, image_url, title }: Snip
     }),
     [audio_url, start_time]
   )
+
   const player = useAudioPlayer(audioPlayerData)
+
+  const searchWords = searchInput.split(/[ ,]+/);
+  const snippetWords = snippet.split(/[ ,]+/);
+
+  const highlightWord = (word) => {
+    return searchWords.some(searchWord => {
+      if (word && searchWord) {
+        return word.toLowerCase().includes(searchWord.toLowerCase());
+      }
+      return false;
+    });
+  };
+
+  function highlightWords(snippetWords, highlightWord) {
+    const highlightedElements = [];
+
+    let subarray = [];
+    for (let index = 0; index < snippetWords.length; index++) {
+      const word = snippetWords[index];
+      const highlight = highlightWord(word);
+
+      if (highlight) {
+        subarray.push(word);
+      } else {
+        if (subarray.length > 0) {
+          highlightedElements.push(
+            <span key={`${index}-highlight`} className={`bg-yellow-500/30 text-yellow-300 px-1 mx-0 rounded`}>
+              {subarray.join(' ')}
+            </span>,
+            " "
+          );
+          subarray = [];
+        }
+        highlightedElements.push(<span key={`${index}-normal`}>{word}</span>, " ");
+      }
+    }
+
+    if (subarray.length > 0) {
+      highlightedElements.push(
+        <span key={`${snippetWords.length}-highlight`} className={`bg-yellow-500/30 text-yellow-300 px-2 mx-0 rounded`}>
+          {subarray.join(' ')}
+        </span>
+      );
+    }
+
+    return highlightedElements;
+  }
 
   return (
     <div className='my-2 p-4 light:bg-gray-100/25 rounded-lg relative overflow-clip'>
@@ -76,12 +113,12 @@ function SnippetsCard({ snippet, start_time, audio_url, image_url, title }: Snip
         <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z" />
         <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z" />
       </svg>
-  
+
       <div
         // type="button"
         onClick={() => {
           player.play()
-          player.seek(parseInt(start_time)-10)
+          player.seek(parseInt(start_time) - 10)
         }}
         className="flex flex-row items-center gap-1 justify-end text-sm font-bold leading-6 place-self-end text-blue-500 hover:text-blue-700 active:text-blue-900 dark:text-blue-400 dark:hover:text-blue-200 dark:active:text-blue-100"
       >
@@ -91,7 +128,9 @@ function SnippetsCard({ snippet, start_time, audio_url, image_url, title }: Snip
         />
         <div className='text-sm tracking-tighter font-bold text-red-400'>listen from</div>{sec_to_time(parseInt(start_time))}
       </div>
-      <div className='mt-1 light:text-gray-600 tracking-tight text-sm text-justify'>{snippet}</div>
+      <div className='mt-1 light:text-gray-600 tracking-tight text-sm text-justify'>
+        {highlightWords(snippetWords, highlightWord)}
+      </div>
     </div>
   );
 }
