@@ -92,6 +92,7 @@ export default function IndexPage() {
                 image_url={item.image_url}
                 date={item.date}
                 summary={item.summary}
+                searchInput={searchInput}
               />
             ))}
           </div>
